@@ -4,21 +4,20 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import ly.generalassemb.drewmahrt.shoppinglistwithsearch.setup.DBAssetHelper;
 
@@ -40,26 +39,33 @@ public class MainActivity extends AppCompatActivity {
         mShoppingListView = (ListView) findViewById(R.id.shopping_list_view);
 
         mHelper = new ShoppingSQLiteOpenHelper(MainActivity.this);
-        Cursor cursor = mHelper.getShoppingList(); // this was a problem
+        Cursor cursor = mHelper.getShoppingList();
 
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
+        String a = new String (db.getName());
+        String b = new String ();
+        String xxx = (getName + getType);
 
-        mShoppingListView.setAdapter(mCursorAdapter); //this was a problem
+        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{xxx}, new int[]{android.R.id.text1}, 0);
+        // orig: mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
+
+        mShoppingListView.setAdapter(mCursorAdapter);
 
         handleIntent(getIntent());
+
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.options_menu, menu);
 
+        // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.search_text).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
@@ -72,13 +78,11 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Cursor cursor = mHelper.searchShoppingList(query);
-            Toast.makeText(MainActivity.this, "Searching for: " + query, Toast.LENGTH_SHORT).show();
             mCursorAdapter.changeCursor(cursor);
             mCursorAdapter.notifyDataSetChanged();
-
-
-            TextView result = (TextView) findViewById(R.id.search_text);
-            result.setText("WE have found: " + query);
         }
     }
+
+
 }
+

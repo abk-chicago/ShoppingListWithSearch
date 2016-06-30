@@ -30,7 +30,6 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
     public static final String COL_ITEM_DESCRIPTION = "DESCRIPTION";
     public static final String COL_ITEM_TYPE = "TYPE";
 
-
     public static final String[] SHOPPING_COLUMNS = {COL_ID,COL_ITEM_NAME,COL_ITEM_DESCRIPTION,COL_ITEM_PRICE,COL_ITEM_TYPE};
 
     private static final String CREATE_SHOPPING_LIST_TABLE =
@@ -42,12 +41,9 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
                     COL_ITEM_PRICE + " TEXT, " +
                     COL_ITEM_TYPE + " TEXT )";
 
-
     public ShoppingSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -74,6 +70,59 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return returnId;
     }
 
+    public Cursor getShoppingList(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
+                SHOPPING_COLUMNS, // b. column names
+                COL_ITEM_NAME + " AND " + COL_ITEM_TYPE, // c. selections
+                null, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        return cursor;
+    }
+
+
+
+    public Cursor getA(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor getName = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
+                SHOPPING_COLUMNS, // b. column names
+                COL_ITEM_NAME, // c. selections
+                null, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+        return getName;
+    }
+
+    public Cursor getB(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor getType = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
+                SHOPPING_COLUMNS, // b. column names
+                COL_ITEM_TYPE, // c. selections
+                null, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        return getType;
+    }
+
+
+
+
+
 
     public int deleteItem(int id){
         SQLiteDatabase db = getWritableDatabase();
@@ -84,13 +133,13 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return deleteNum;
     }
 
-    public Cursor getShoppingList() {
+    public Cursor searchShoppingList(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
-                null, // c. selections
-                null, // d. selections args
+                COL_ITEM_NAME + " LIKE ?" + " OR " + COL_ITEM_TYPE + " LIKE ?", // c. selections
+                new String[]{"found: " + "%" + query + "%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
                 null, // g. order by
@@ -98,18 +147,5 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
 
         return cursor;
     }
-    public Cursor searchShoppingList(String query){
-        SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
-                SHOPPING_COLUMNS, // b. column names
-                COL_ITEM_NAME + " LIKE ?", // c. selections
-                new String[]{"%"+query+"%"}, // d. selections args
-                null, // e. group by
-                null, // f. having
-                null, // g. order by
-                null); // h. limit
-
-        return cursor;
-    }
 }
