@@ -70,14 +70,14 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return returnId;
     }
 
-    public Cursor getShoppingList(){
+    public Cursor getShoppingList(String query){
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
                 COL_ITEM_NAME + " AND " + COL_ITEM_TYPE, // c. selections
-                null, // d. selections args
+                new String[]{"%" + query + "%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
                 null, // g. order by
@@ -86,16 +86,14 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
-
-
-    public Cursor getA(){
+    public Cursor getName(String query){
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor getName = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
-                COL_ITEM_NAME, // c. selections
-                null, // d. selections args
+                COL_ITEM_NAME + " LIKE ?", // c. selections
+                new String[]{"%" + query + "%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
                 null, // g. order by
@@ -103,14 +101,14 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return getName;
     }
 
-    public Cursor getB(){
+    public Cursor getType(String query){
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor getType = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
-                COL_ITEM_TYPE, // c. selections
-                null, // d. selections args
+                COL_ITEM_TYPE + " LIKE ?", // c. selections
+                new String[]{"%" + query + "%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
                 null, // g. order by

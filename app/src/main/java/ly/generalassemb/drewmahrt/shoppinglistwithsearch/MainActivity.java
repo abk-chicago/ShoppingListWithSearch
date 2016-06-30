@@ -15,9 +15,6 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import ly.generalassemb.drewmahrt.shoppinglistwithsearch.setup.DBAssetHelper;
 
@@ -41,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new ShoppingSQLiteOpenHelper(MainActivity.this);
         Cursor cursor = mHelper.getShoppingList();
 
-        String a = new String (db.getName());
-        String b = new String ();
-        String xxx = (getName + getType);
+  String getName = getName();
+  String getType = getType();
+  String xxx = (getName + ", " + getType);
 
         mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{xxx}, new int[]{android.R.id.text1}, 0);
-        // orig: mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
+        // orig:
+        //mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
 
         mShoppingListView.setAdapter(mCursorAdapter);
 
