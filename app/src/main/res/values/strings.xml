@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ShoppingListWithSearch</string>
+    <string name="search_text">Search for a grocery item</string>
+    <string name="search_hint">Enter a grocery item</string>
+    <string name="searching_toast">Searching, per your request</string>
+
+</resources>
