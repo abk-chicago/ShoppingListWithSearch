@@ -43,15 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         //I wanted to change the Cursor Adapter to be able to handle to text views within the listview, but didnt have time to figure it out tonight.
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
+        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
         mShoppingListView.setAdapter(mCursorAdapter);
 
         handleIntent(getIntent());
     }
-
-
-
-
 
 
 

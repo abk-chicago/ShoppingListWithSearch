@@ -70,14 +70,15 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return returnId;
     }
 
-    public Cursor getShoppingList(String query){
+    public Cursor getShoppingList(){
+        //this one gathers all the data and stores in cursor
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
                 COL_ITEM_NAME, // c. selections
-                new String[]{"%" + query + "%"}, // d. selections args
+                null, // d. selections args
                 null, // e. group by
                 null, // f. having
                 null, // g. order by
@@ -133,6 +134,7 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
 //        return deleteNum;
 //    }
 
+    //this one performs the search query from the data in the cursor
     public Cursor searchShoppingList(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
 
