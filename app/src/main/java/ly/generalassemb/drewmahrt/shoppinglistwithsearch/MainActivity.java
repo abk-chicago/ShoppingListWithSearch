@@ -36,21 +36,24 @@ public class MainActivity extends AppCompatActivity {
         mShoppingListView = (ListView) findViewById(R.id.shopping_list_view);
 
         mHelper = new ShoppingSQLiteOpenHelper(MainActivity.this);
+
+        // ******* LOOK HERE *******
+        // this line below is showing an error.  I am not understanding why.
         Cursor cursor = mHelper.getShoppingList();
 
-  String getName = getName();
-  String getType = getType();
-  String xxx = (getName + ", " + getType);
 
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{xxx}, new int[]{android.R.id.text1}, 0);
-        // orig:
-        //mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
-
+        //I wanted to change the Cursor Adapter to be able to handle to text views within the listview, but didnt have time to figure it out tonight.
+        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{ShoppingSQLiteOpenHelper.COL_ITEM_NAME}, new int[]{android.R.id.text1}, 0);
         mShoppingListView.setAdapter(mCursorAdapter);
 
         handleIntent(getIntent());
-
     }
+
+
+
+
+
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 (SearchView) menu.findItem(R.id.search_text).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-
         return true;
     }
 

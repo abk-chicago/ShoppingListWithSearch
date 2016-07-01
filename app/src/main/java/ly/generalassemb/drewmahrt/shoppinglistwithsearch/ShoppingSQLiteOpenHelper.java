@@ -76,7 +76,7 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
 
         Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
-                COL_ITEM_NAME + " AND " + COL_ITEM_TYPE, // c. selections
+                COL_ITEM_NAME, // c. selections
                 new String[]{"%" + query + "%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
@@ -86,10 +86,15 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    
+
+
+    //   ************** IN BETWEEN HERE (BELOW) I TRIED TO CREATE NEW METHODS & CURSORS
+    // TO PULL THE TWO PIECES FROM THE DATABASE - WHICH I WOULD THEN PUT INTO THE TEXT VIEWS
+    // INSIDE THE LISTVIEW... BUT I DIDN'T FIGURE IT ALL OUT IN TIME.
+
     public Cursor getName(String query){
-
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor getName = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
                 COL_ITEM_NAME + " LIKE ?", // c. selections
@@ -102,9 +107,7 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
     }
 
     public Cursor getType(String query){
-
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor getType = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
                 COL_ITEM_TYPE + " LIKE ?", // c. selections
@@ -113,30 +116,29 @@ public class ShoppingSQLiteOpenHelper extends SQLiteOpenHelper{
                 null, // f. having
                 null, // g. order by
                 null); // h. limit
-
         return getType;
     }
+//   ************** IN BETWEEN HERE (ABOVE)  ^^^^^^^^^^^^^^^^^^^^
 
 
 
-
-
-
-    public int deleteItem(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        int deleteNum = db.delete(SHOPPING_LIST_TABLE_NAME,
-                COL_ID + " = ?",
-                new String[]{String.valueOf(id)});
-        db.close();
-        return deleteNum;
-    }
+  // THIS NOT NEEDED RIGHT NOW:
+//
+//    public int deleteItem(int id){
+//        SQLiteDatabase db = getWritableDatabase();
+//        int deleteNum = db.delete(SHOPPING_LIST_TABLE_NAME,
+//                COL_ID + " = ?",
+//                new String[]{String.valueOf(id)});
+//        db.close();
+//        return deleteNum;
+//    }
 
     public Cursor searchShoppingList(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(SHOPPING_LIST_TABLE_NAME, // a. table
                 SHOPPING_COLUMNS, // b. column names
-                COL_ITEM_NAME + " LIKE ?" + " OR " + COL_ITEM_TYPE + " LIKE ?", // c. selections
+                COL_ITEM_NAME + " LIKE ?" , // c. selections
                 new String[]{"found: " + "%" + query + "%"}, // d. selections args
                 null, // e. group by
                 null, // f. having
